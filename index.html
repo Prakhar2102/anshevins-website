@@ -136,11 +136,84 @@ section{ position:relative; padding: 5.5rem 1.5rem; }
   margin-bottom: 0.6rem;
 }
 
+/* large faint arch watermark behind the whole hero content */
+.hero-arch-bg{
+  position:absolute;
+  top: 6%;
+  left:50%;
+  transform: translateX(-50%);
+  width: min(92vw, 620px);
+  opacity: 0.16;
+  z-index:1;
+  pointer-events:none;
+}
+
+/* Ganesh medallion */
+.ganesh-medallion{
+  position:relative;
+  width: 108px;
+  height: 108px;
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom: 0.2rem;
+}
+.ganesh-medallion .rays{
+  position:absolute; inset:0;
+  animation: spin-slow 40s linear infinite;
+}
+.ganesh-medallion .ring{
+  position:absolute; inset:6px;
+  border-radius:50%;
+  border: 2px solid var(--gold);
+  background: radial-gradient(circle at 50% 38%, #FBEBCB 0%, var(--champagne) 55%, var(--champagne-deep) 100%);
+  box-shadow: 0 8px 22px rgba(139,58,34,0.28), inset 0 0 0 1px rgba(255,255,255,0.5);
+}
+.ganesh-medallion .diya{
+  position:absolute; bottom: -4px;
+  width:14px; height:14px;
+}
+.ganesh-medallion .diya.left{ left: -8px; }
+.ganesh-medallion .diya.right{ right: -8px; }
+@keyframes spin-slow{ from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
+@keyframes flicker{ 0%,100%{ opacity:1; transform:scaleY(1);} 50%{ opacity:0.75; transform:scaleY(0.85);} }
+.diya .flame{ transform-origin:center bottom; animation: flicker 1.6s ease-in-out infinite; }
+
 .ganesh-icon{
+  position:relative;
   width: 62px;
   height: 62px;
-  margin-bottom: -0.2rem;
+  z-index:2;
 }
+
+.hero-divider{
+  width: 168px;
+  height: 20px;
+  color: var(--gold);
+  margin: 0.3rem 0 0.2rem;
+}
+
+/* floating marigold petals */
+.petals-layer{
+  position:absolute; inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:1;
+}
+.petal{
+  position:absolute;
+  top:-5%;
+  width: 10px; height:10px;
+  border-radius: 60% 0 60% 0;
+  background: var(--marigold);
+  opacity:0.55;
+  animation-name: petal-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes petal-fall{
+  0%{ transform: translateY(-10%) translateX(0) rotate(0deg); }
+  100%{ transform: translateY(115vh) translateX(30px) rotate(300deg); }
+}
+
 .namah{
   font-family: var(--font-script);
   font-style: italic;
@@ -173,59 +246,84 @@ section{ position:relative; padding: 5.5rem 1.5rem; }
 }
 
 .hashtag-row{
-  display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap: 0.9rem;
-  margin-top: 0.4rem;
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap: 1rem;
+  margin-top: 0.5rem;
 }
 .hashtag-pill{
-  font-family: var(--font-body);
-  font-weight:600;
-  letter-spacing:0.03em;
-  color: var(--rust);
-  background: rgba(255,255,255,0.5);
-  border: var(--edge);
-  padding: 0.5rem 1.1rem;
-  border-radius: 999px;
-  font-size: 0.95rem;
+  font-family: var(--font-display);
+  font-weight:400;
+  letter-spacing:0.02em;
+  color: var(--terracotta-deep);
+  font-size: clamp(1.15rem, 3vw, 1.5rem);
+  position: relative;
+  padding-bottom: 0.15rem;
+}
+.hashtag-pill::after{
+  content:"";
+  position:absolute;
+  left:8%; right:8%; bottom:-2px;
+  height:1px;
+  background: repeating-linear-gradient(90deg, var(--gold) 0 6px, transparent 6px 11px);
+  opacity:0.7;
 }
 .ig-btn{
-  display:inline-flex; align-items:center; gap:0.5rem;
+  display:inline-flex; align-items:center; gap:0.55rem;
   background: linear-gradient(135deg, var(--terracotta), var(--maroon));
   color: var(--ivory);
-  padding: 0.6rem 1.25rem;
+  padding: 0.55rem 1.3rem 0.55rem 0.6rem;
   border-radius: 999px;
   font-weight:600;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
+  letter-spacing: 0.01em;
   box-shadow: 0 8px 22px rgba(139,58,34,0.3);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.ig-btn .icon-wrap{
+  display:flex; align-items:center; justify-content:center;
+  width: 26px; height: 26px;
+  border-radius:50%;
+  background: rgba(255,255,255,0.18);
 }
 .ig-btn:hover{ transform: translateY(-2px); box-shadow: 0 12px 26px rgba(139,58,34,0.4); }
 
 /* countdown */
 .countdown{
-  margin-top: 2.2rem;
-  display:flex; gap: clamp(0.6rem, 2vw, 1.4rem);
+  margin-top: 2.4rem;
+  display:flex; align-items:center; gap: clamp(0.5rem, 1.8vw, 1.1rem);
   flex-wrap: wrap; justify-content:center;
 }
 .count-box{
-  background: rgba(255,255,255,0.55);
-  border: var(--edge);
-  border-radius: 14px;
-  padding: 0.85rem 1.1rem;
-  min-width: 78px;
+  background: rgba(255,255,255,0.6);
+  border: 1.4px solid rgba(199,150,47,0.55);
+  border-radius: 18px;
+  padding: 1.1rem 1.3rem;
+  min-width: 96px;
   backdrop-filter: blur(6px);
+  box-shadow: 0 10px 28px rgba(139,58,34,0.14);
 }
 .count-num{
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-size: clamp(2.4rem, 6.5vw, 4rem);
   color: var(--rust);
   line-height:1;
 }
 .count-label{
-  font-size: 0.62rem;
-  letter-spacing: 0.18em;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--olive-deep);
-  margin-top: 0.3rem;
+  font-weight: 600;
+  margin-top: 0.45rem;
+}
+.count-sep{
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: var(--gold);
+  line-height:1;
+  margin-top: -1.2rem;
+}
+@media (max-width: 560px){
+  .count-sep{ display:none; }
 }
 
 .scroll-cue{
@@ -525,51 +623,87 @@ footer .foot-meta{ margin-top:1.6rem; font-size:0.75rem; letter-spacing:0.08em; 
 
 <!-- ============ HERO ============ -->
 <header class="hero" id="hero">
-  <!-- ===================================================================
-       INSERT PHOTO HERE — Hero background couple photo
-       Replace the empty div below with your photo, e.g.:
-       <div class="hero-bg-layer" id="parallaxLayer" style="background-image:url('images/hero-couple.jpg'); background-size:cover; background-position:center;"></div>
-       Keep the pattern as a fallback/overlay if you like — just layer a
-       semi-transparent gradient over the photo so text stays readable.
-  ==================================================================== -->
   <div class="hero-bg-layer" id="parallaxLayer" aria-hidden="true"></div>
+
+  <!-- large faint mandap arch watermark, sits behind everything -->
+  <svg class="hero-arch-bg" viewBox="0 0 360 170" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M20 160 V70 Q20 25 65 22 H295 Q340 25 340 70 V160" stroke="#8C3A22" stroke-width="2.4"/>
+    <path d="M40 160 V78 Q40 42 72 40 H288 Q320 42 320 78 V160" stroke="#BF5B3E" stroke-width="1.2"/>
+    <g fill="#8C3A22">
+      <circle cx="90" cy="34" r="3.5"/><circle cx="120" cy="30" r="3.5"/><circle cx="150" cy="27" r="3.5"/>
+      <circle cx="180" cy="25" r="3.5"/><circle cx="210" cy="27" r="3.5"/><circle cx="240" cy="30" r="3.5"/><circle cx="270" cy="34" r="3.5"/>
+    </g>
+  </svg>
+
+  <div class="petals-layer" id="petalsLayer" aria-hidden="true"></div>
+
   <div class="hero-inner">
 
-    <svg class="mandap-frame" viewBox="0 0 360 170" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M20 160 V70 Q20 25 65 22 H295 Q340 25 340 70 V160" stroke="#C7962F" stroke-width="3"/>
-      <path d="M40 160 V78 Q40 42 72 40 H288 Q320 42 320 78 V160" stroke="#BF5B3E" stroke-width="1.6" opacity="0.7"/>
-      <circle cx="65" cy="22" r="7" fill="#E7A23E"/>
-      <circle cx="295" cy="22" r="7" fill="#E7A23E"/>
-      <path d="M20 160 Q30 150 20 140 Q30 130 20 120 Q30 110 20 100" stroke="#7C8355" stroke-width="2" fill="none"/>
-      <path d="M340 160 Q330 150 340 140 Q330 130 340 120 Q330 110 340 100" stroke="#7C8355" stroke-width="2" fill="none"/>
-      <g fill="#E7A23E">
-        <circle cx="90" cy="34" r="4"/><circle cx="120" cy="30" r="4"/><circle cx="150" cy="27" r="4"/>
-        <circle cx="180" cy="25" r="4"/><circle cx="210" cy="27" r="4"/><circle cx="240" cy="30" r="4"/><circle cx="270" cy="34" r="4"/>
-      </g>
-      <path d="M90 34 Q105 46 120 30 Q135 46 150 27 Q165 46 180 25 Q195 46 210 27 Q225 46 240 30 Q255 46 270 34" stroke="#7C8355" stroke-width="1.4" fill="none" opacity="0.8"/>
-    </svg>
+    <!-- Lord Ganesh medallion -->
+    <div class="ganesh-medallion" role="img" aria-label="Lord Ganesh">
+      <svg class="rays" viewBox="0 0 108 108" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g stroke="#C7962F" stroke-width="1.4" opacity="0.55">
+          <line x1="54" y1="2" x2="54" y2="14"/>
+          <line x1="54" y1="94" x2="54" y2="106"/>
+          <line x1="2" y1="54" x2="14" y2="54"/>
+          <line x1="94" y1="54" x2="106" y2="54"/>
+          <line x1="16" y1="16" x2="24" y2="24"/>
+          <line x1="84" y1="16" x2="92" y2="24"/>
+          <line x1="16" y1="92" x2="24" y2="84"/>
+          <line x1="84" y1="92" x2="92" y2="84"/>
+          <line x1="27" y1="8" x2="32" y2="18"/>
+          <line x1="81" y1="8" x2="76" y2="18"/>
+          <line x1="27" y1="100" x2="32" y2="90"/>
+          <line x1="81" y1="100" x2="76" y2="90"/>
+        </g>
+      </svg>
+      <span class="ring" aria-hidden="true"></span>
 
-    <svg class="ganesh-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Lord Ganesh" role="img">
-      <circle cx="50" cy="50" r="47" fill="none" stroke="#C7962F" stroke-width="1.4" opacity="0.6"/>
-      <!-- crown -->
-      <path d="M38 22 Q50 8 62 22 L58 28 Q50 20 42 28 Z" fill="#E7A23E"/>
-      <circle cx="50" cy="16" r="3" fill="#BF5B3E"/>
-      <!-- ears -->
-      <path d="M27 40 Q10 42 14 60 Q18 74 34 66 Q26 55 27 40Z" fill="#BF5B3E" opacity="0.9"/>
-      <path d="M73 40 Q90 42 86 60 Q82 74 66 66 Q74 55 73 40Z" fill="#BF5B3E" opacity="0.9"/>
-      <!-- head -->
-      <path d="M33 42 Q30 26 50 24 Q70 26 67 42 Q69 54 62 60 L61 66 Q50 72 39 66 L38 60 Q31 54 33 42Z" fill="#8C3A22"/>
-      <!-- trunk -->
-      <path d="M48 56 Q44 66 50 74 Q56 80 50 86 Q46 89 42 86" stroke="#6B1E23" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-      <!-- eyes -->
-      <circle cx="43" cy="46" r="2.3" fill="#FBF2E3"/>
-      <circle cx="58" cy="46" r="2.3" fill="#FBF2E3"/>
-      <!-- tilak -->
-      <path d="M50 34 L47 40 L53 40 Z" fill="#E7A23E"/>
-      <!-- tusk -->
-      <path d="M56 58 L60 62" stroke="#FBF2E3" stroke-width="2.4" stroke-linecap="round"/>
-      <!-- necklace -->
-      <path d="M39 62 Q50 70 61 62" stroke="#C7962F" stroke-width="2" fill="none"/>
+      <svg class="diya left" viewBox="0 0 20 20" aria-hidden="true">
+        <ellipse cx="10" cy="15" rx="8" ry="3.4" fill="#8C3A22"/>
+        <ellipse cx="10" cy="13.6" rx="6" ry="2.2" fill="#E7A23E"/>
+        <path class="flame" d="M10 11 Q7 8 10 3 Q13 8 10 11Z" fill="#D98F2B"/>
+      </svg>
+      <svg class="diya right" viewBox="0 0 20 20" aria-hidden="true">
+        <ellipse cx="10" cy="15" rx="8" ry="3.4" fill="#8C3A22"/>
+        <ellipse cx="10" cy="13.6" rx="6" ry="2.2" fill="#E7A23E"/>
+        <path class="flame" d="M10 11 Q7 8 10 3 Q13 8 10 11Z" fill="#D98F2B"/>
+      </svg>
+
+      <svg class="ganesh-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- lotus base -->
+        <path d="M30 88 Q50 96 70 88 Q60 82 50 84 Q40 82 30 88Z" fill="#E7A23E"/>
+        <!-- crown -->
+        <path d="M36 24 Q50 6 64 24 L59 31 Q50 21 41 31 Z" fill="#E7A23E"/>
+        <circle cx="50" cy="14" r="3.4" fill="#BF5B3E"/>
+        <circle cx="40" cy="20" r="2" fill="#C7962F"/>
+        <circle cx="60" cy="20" r="2" fill="#C7962F"/>
+        <!-- ears -->
+        <path d="M25 42 Q7 44 11 63 Q15 78 33 68 Q25 56 25 42Z" fill="#A44A31"/>
+        <path d="M75 42 Q93 44 89 63 Q85 78 67 68 Q75 56 75 42Z" fill="#A44A31"/>
+        <!-- head/face -->
+        <path d="M32 44 Q28 26 50 24 Q72 26 68 44 Q70 57 62 63 L61 70 Q50 76 39 70 L38 63 Q30 57 32 44Z" fill="#8C3A22"/>
+        <!-- ear inner detail -->
+        <path d="M22 48 Q16 52 18 60" stroke="#6B1E23" stroke-width="1.4" fill="none" opacity="0.6"/>
+        <path d="M78 48 Q84 52 82 60" stroke="#6B1E23" stroke-width="1.4" fill="none" opacity="0.6"/>
+        <!-- trunk, curled -->
+        <path d="M47 58 Q42 68 49 76 Q56 82 49 90 Q45 93 40 90" stroke="#6B1E23" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <!-- tilak -->
+        <path d="M50 34 L46.5 41 L53.5 41 Z" fill="#E7A23E"/>
+        <!-- eyes, gently closed in blessing -->
+        <path d="M40 47 Q43 45 46 47" stroke="#FBF2E3" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M54 47 Q57 45 60 47" stroke="#FBF2E3" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- tusk -->
+        <path d="M58 60 L63 65" stroke="#FBF2E3" stroke-width="2.6" stroke-linecap="round"/>
+        <!-- necklace -->
+        <path d="M38 65 Q50 74 62 65" stroke="#C7962F" stroke-width="2.2" fill="none"/>
+        <circle cx="50" cy="72" r="2.2" fill="#E7A23E"/>
+      </svg>
+    </div>
+
+    <svg class="hero-divider" viewBox="0 0 168 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M4 10 H68 M100 10 H164" stroke="currentColor" stroke-width="1"/>
+      <path d="M84 3 Q90 10 84 17 Q78 10 84 3Z" fill="currentColor"/>
     </svg>
 
     <p class="namah">|| श्री गणेशाय नमः · Shree Ganeshay Namah ||</p>
@@ -581,15 +715,20 @@ footer .foot-meta{ margin-top:1.6rem; font-size:0.75rem; letter-spacing:0.08em; 
     <div class="hashtag-row">
       <span class="hashtag-pill">#anshevins</span>
       <a class="ig-btn" href="https://instagram.com/anshevins" target="_blank" rel="noopener">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1"/></svg>
+        <span class="icon-wrap">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:15px;height:15px;"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1"/></svg>
+        </span>
         @anshevins
       </a>
     </div>
 
     <div class="countdown" id="countdown" aria-live="polite">
       <div class="count-box"><div class="count-num" id="cd-days">00</div><div class="count-label">Days</div></div>
+      <div class="count-sep">:</div>
       <div class="count-box"><div class="count-num" id="cd-hours">00</div><div class="count-label">Hours</div></div>
+      <div class="count-sep">:</div>
       <div class="count-box"><div class="count-num" id="cd-mins">00</div><div class="count-label">Mins</div></div>
+      <div class="count-sep">:</div>
       <div class="count-box"><div class="count-num" id="cd-secs">00</div><div class="count-label">Secs</div></div>
     </div>
     <p style="font-size:0.78rem; letter-spacing:0.08em; color:var(--olive-deep); margin-top:0.6rem;">until the wedding ceremony · Nov 24, 7:00 PM</p>
@@ -623,47 +762,7 @@ footer .foot-meta{ margin-top:1.6rem; font-size:0.75rem; letter-spacing:0.08em; 
   <div class="wrap">
     <p class="eyebrow" style="text-align:center;">Moments</p>
     <h2 class="section-title reveal" style="text-align:center;">Pre-Wedding Frames</h2>
-
-    <!-- =================================================================
-         PHOTO GALLERY — 6 slots below.
-         To insert a real photo: replace the <svg>...</svg> icon inside a
-         .gallery-item with an <img> tag, e.g.:
-           <img src="images/gallery-1.jpg" alt="Pre-wedding · The Proposal Walk">
-         Keep the data-caption attribute — it powers the caption overlay.
-    ================================================================== -->
-    <div class="gallery-grid" id="galleryGrid">
-
-      <!-- INSERT PHOTO 1 HERE -->
-      <div class="gallery-item" data-caption="Pre-wedding · The Proposal Walk">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>
-      </div>
-
-      <!-- INSERT PHOTO 2 HERE -->
-      <div class="gallery-item" data-caption="Pre-wedding · Golden Hour">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>
-      </div>
-
-      <!-- INSERT PHOTO 3 HERE -->
-      <div class="gallery-item" data-caption="Pre-wedding · Candid Laughs">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>
-      </div>
-
-      <!-- INSERT PHOTO 4 HERE -->
-      <div class="gallery-item" data-caption="Engagement · Rings">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>
-      </div>
-
-      <!-- INSERT PHOTO 5 HERE -->
-      <div class="gallery-item" data-caption="Couple Portrait">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>
-      </div>
-
-      <!-- INSERT PHOTO 6 HERE -->
-      <div class="gallery-item" data-caption="Together, Always">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>
-      </div>
-
-    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
   </div>
 </section>
 
@@ -757,6 +856,26 @@ footer .foot-meta{ margin-top:1.6rem; font-size:0.75rem; letter-spacing:0.08em; 
   setInterval(tick, 1000);
 })();
 
+/* ============ FLOATING PETALS ============ */
+(function(){
+  const layer = document.getElementById('petalsLayer');
+  if(!layer) return;
+  const colors = ['var(--marigold)', 'var(--mustard)', 'var(--terracotta)'];
+  const count = window.innerWidth < 640 ? 10 : 16;
+  for(let i=0; i<count; i++){
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.left = (Math.random()*100) + '%';
+    p.style.background = colors[i % colors.length];
+    const size = 6 + Math.random()*8;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.animationDuration = (10 + Math.random()*10) + 's';
+    p.style.animationDelay = (Math.random()*12) + 's';
+    layer.appendChild(p);
+  }
+})();
+
 /* ============ PARALLAX ============ */
 (function(){
   const layer = document.getElementById('parallaxLayer');
@@ -782,6 +901,26 @@ footer .foot-meta{ margin-top:1.6rem; font-size:0.75rem; letter-spacing:0.08em; 
     });
   }, { threshold: 0.15 });
   items.forEach(i=>io.observe(i));
+})();
+
+/* ============ GALLERY PLACEHOLDERS ============ */
+(function(){
+  const captions = [
+    "Pre-wedding · The Proposal Walk",
+    "Pre-wedding · Golden Hour",
+    "Pre-wedding · Candid Laughs",
+    "Engagement · Rings",
+    "Couple Portrait",
+    "Together, Always"
+  ];
+  const grid = document.getElementById('galleryGrid');
+  captions.forEach(cap=>{
+    const div = document.createElement('div');
+    div.className = 'gallery-item';
+    div.setAttribute('data-caption', cap);
+    div.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>';
+    grid.appendChild(div);
+  });
 })();
 
 /* ============ ITINERARY DATA + CALENDAR LINKS ============ */
@@ -819,9 +958,9 @@ footer .foot-meta{ margin-top:1.6rem; font-size:0.75rem; letter-spacing:0.08em; 
     },
     {
       date: "Nov 26", time: "7:00 PM onwards", name: "The Reception",
-      venueType: "venue", venue: "The Legend Hotel, Prayagraj", dress: "Formal / Evening Glam / Classic Silk",
+      venueType: "venue", venue: "DSOI, Prayagraj", dress: "Formal / Evening Glam / Classic Silk",
       start: "20261126T190000", end: "20261126T230000",
-      desc: "A formal evening to toast the newlyweds at The Legend Hotel, Prayagraj."
+      desc: "A formal evening to toast the newlyweds at DSOI, Prayagraj."
     }
   ];
 
@@ -866,10 +1005,10 @@ footer .foot-meta{ margin-top:1.6rem; font-size:0.75rem; letter-spacing:0.08em; 
 /* ============ VENUES ============ */
 (function(){
   const venues = [
-    { name: "Home", desc: "Where it all begins — Chakri Matmangra, Haldi and Silmayan take place here, surrounded by family.", q: "Home" },
+    { name: "Home", desc: "Where it all begins — Chakri Matmangra, Haldi and Silmayan take place here, surrounded by family.", q: "25.467050,81.831854" },
     { name: "Yugantar Hotel", desc: "Venue for the Sangeet Night — dance floor, lights, and music till late.", q: "Yugantar Hotel" },
     { name: "Raebareli", desc: "The wedding ceremony venue, where Ashvin and Anshika take their vows.", q: "Raebareli" },
-    { name: "The Legend Hotel, Prayagraj", desc: "A grand evening reception to celebrate the newlyweds in style.", q: "The Legend Hotel Prayagraj" }
+    { name: "DSOI, Prayagraj", desc: "A grand evening reception to celebrate the newlyweds in style.", q: "25.461621,81.8190474" }
   ];
   const grid = document.getElementById('venueGrid');
   venues.forEach(v=>{
@@ -890,72 +1029,15 @@ footer .foot-meta{ margin-top:1.6rem; font-size:0.75rem; letter-spacing:0.08em; 
   document.querySelectorAll('.venue-card.reveal').forEach(el=>io3.observe(el));
 })();
 
-/* ============ RSVP / WISHES FORM ============
-   This form submits to a Google Apps Script Web App that emails every
-   submission straight to itsprakharjaiswal@gmail.com. No spreadsheet
-   needed — each wish arrives as a normal email.
-
-   SETUP (one-time, ~2 minutes):
-   1. Go to https://script.google.com → New project.
-   2. Delete any starter code and paste this:
-
-      function doPost(e) {
-        var name = e.parameter.fullName;
-        var wishes = e.parameter.wishes;
-        MailApp.sendEmail({
-          to: "itsprakharjaiswal@gmail.com",
-          subject: "New wedding wish from " + name + " — #anshevins",
-          body: "Name: " + name + "\n\nWishes:\n" + wishes
-        });
-        return ContentService.createTextOutput(JSON.stringify({ result: 'success' }))
-          .setMimeType(ContentService.MimeType.JSON);
-      }
-
-   3. Click Deploy → New deployment → gear icon → "Web app".
-      - Execute as: Me
-      - Who has access: Anyone
-      Click Deploy, authorize access (it's your own script — safe to allow),
-      then copy the Web App URL it gives you.
-   4. Paste that URL below, replacing the placeholder value of SCRIPT_URL.
-================================================================ */
+/* ============ RSVP FORM ============ */
 (function(){
-  const SCRIPT_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
-
   const form = document.getElementById('rsvpForm');
   const note = document.getElementById('rsvpNote');
-
   form.addEventListener('submit', function(e){
     e.preventDefault();
-
-    const formData = new FormData(form);
-
-    if (SCRIPT_URL.indexOf("PASTE_YOUR_GOOGLE_APPS_SCRIPT") === 0) {
-      // SCRIPT_URL hasn't been configured yet — show the confirmation
-      // locally so the form still feels complete during setup/testing.
-      console.warn("RSVP form: SCRIPT_URL not configured yet — wishes are not being emailed yet.");
-      note.classList.add('show');
-      form.reset();
-      note.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      return;
-    }
-
-    const submitBtn = form.querySelector('.submit-btn');
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Sending...";
-
-    fetch(SCRIPT_URL, { method: 'POST', body: formData })
-      .then(() => {
-        note.classList.add('show');
-        form.reset();
-        note.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      })
-      .catch(() => {
-        alert("Something went wrong sending your wishes — please try again in a moment.");
-      })
-      .finally(() => {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Send Wishes";
-      });
+    note.classList.add('show');
+    form.reset();
+    note.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
 })();
 </script>
